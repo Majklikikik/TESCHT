@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="michaelstanek.tescht.singleplayergame"
+    android:id="@+id/RelativeLayout"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/darker_gray">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.07">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.02"
+                android:layout_height="fill_parent"
+                android:text="LEER"
+                android:background="@android:color/holo_red_light"
+                android:id="@+id/textView10" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.98"
+                android:layout_height="fill_parent"
+                android:text="SPALTEN"
+                android:background="@android:color/holo_red_light"
+                android:id="@+id/textView11" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.93"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.05"
+                android:layout_height="fill_parent"
+                android:text="ZEILEN"
+                android:background="@android:color/holo_red_light"
+                android:id="@+id/textView12"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.95">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="0.95"
+                    android:layout_height="fill_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true">
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="fill_parent"
+                            android:text=""
+                            android:id="@+id/textView13"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.65"
+                            android:layout_height="fill_parent"
+                            android:text="MELDUNGEN/BEFEHLE"
+                            android:id="@+id/textView14"
+                            android:background="@android:color/holo_blue_dark"/>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="0.125"
+                            android:layout_height="fill_parent"
+                            android:text="UNDO"
+                            android:id="@+id/button3"
+                            android:background="@android:color/holo_blue_light"
+                            android:onClick="showImage" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="0.125"
+                            android:layout_height="fill_parent"
+                            android:text="CONTINUE"
+                            android:id="@+id/button4"
+                            android:background="@android:color/holo_blue_dark"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="fill_parent"
+                            android:text=""
+                            android:id="@+id/textView15"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:layout_gravity="center_horizontal" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="fill_parent"
+                            android:text=""
+                            android:id="@+id/textView16"></TextView>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="10"
+                            android:layout_height="fill_parent">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentEnd="false">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/textView18"
+                                    android:background="@android:color/holo_green_light"/>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/textView17"
+                                    android:background="@android:color/holo_green_dark"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="fill_parent"
+                                    android:text="Ships"
+                                    android:id="@+id/textView22" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="fill_parent"
+                                    android:text="Ships"
+                                    android:id="@+id/textView23" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="fill_parent"
+                                    android:text="Ships"
+                                    android:id="@+id/textView24" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="fill_parent"
+                                    android:text="Ships"
+                                    android:id="@+id/textView25" />
+
+                                <ImageButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageButton"
+
+                                    android:layout_weight="0.5" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView"
+                                    android:longClickable="true" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView2"
+                                   />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView3"
+                               />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView4"
+                                    />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView5"
+                                    android:visibility="invisible" />
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="6"
+                            android:layout_height="fill_parent"
+                            android:text=""
+                            android:id="@+id/textView19"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4"
+                        android:text=""
+                        android:id="@+id/textView20"
+                        android:layout_gravity="center_horizontal"
+                        />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:layout_gravity="center_horizontal">
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="fill_parent"
+                            android:text="Options"
+                            android:id="@+id/button"
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:color/holo_blue_dark"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="14"
+                            android:layout_height="fill_parent"
+                            android:text=""
+                            android:id="@+id/textView21"
+                            android:layout_gravity="center_vertical"/>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="fill_parent"
+                            android:text="BESTÄTIGEN"
+                            android:id="@+id/button2"
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:color/holo_blue_light"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/sf"
+                    android:id="@+id/imageView10" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView6"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView7"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView8"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView9"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
