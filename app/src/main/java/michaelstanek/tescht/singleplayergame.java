@@ -30,6 +30,14 @@ import android.widget.Toast;
 import java.lang.ref.WeakReference;
 
 public class singleplayergame extends AppCompatActivity {
+    class Shipdate{
+        int length;
+        char orientation;
+        public Shipdate(int i, char s){
+            this.length=i;
+            this.orientation=s;
+        }
+    }
     class MyDragShadowBuilder extends View.DragShadowBuilder {
         int xratio, yratio;
         public MyDragShadowBuilder(){super();}
@@ -56,10 +64,11 @@ public class singleplayergame extends AppCompatActivity {
     int sts14;
     int sts13;
     int sts12;
-private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n".concat(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE5));
-    String st4 = "Kreuzer:\n".concat(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE4));
-    String st3 = "Zerstörer:\n".concat(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE3));
-    String st2 = "U-Boote:\n".concat(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE2));
+private void InitializeSomething(Intent intent){
+    String st5 = intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE5);
+    String st4 = intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE4);
+    String st3 = intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE3);
+    String st2 = intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE2);
     TextView text;
     //set the Textviews to show how many Ships there are to set
     text = (TextView) findViewById(R.id.textView22);
@@ -71,12 +80,66 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
     text = (TextView) findViewById(R.id.textView25);
     text.setText(st2);
     //set the ints which show the same
-    sts15 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE5));
-    sts14 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE4));
-    sts13 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE3));
-    sts12 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE2));
+    sts15 = Integer.valueOf(st5);
+    sts14 = Integer.valueOf(st4);
+    sts13 = Integer.valueOf(st3);
+    sts12 = Integer.valueOf(st2);
     }
 
+    private void increase(int i){
+        TextView tex;
+        switch (i){
+            case 5:
+                sts15++;
+                tex=(TextView) findViewById(R.id.textView22);
+                tex.setText(String.valueOf(sts15));
+                break;
+            case 4:
+                sts14++;
+                tex=(TextView) findViewById(R.id.textView23);
+                tex.setText(String.valueOf(sts14));
+                break;
+            case 3:
+                sts13++;
+                tex=(TextView) findViewById(R.id.textView24);
+                tex.setText(String.valueOf(sts13));
+                break;
+            case 2:
+                sts12++;
+                tex=(TextView) findViewById(R.id.textView25);
+                tex.setText(String.valueOf(sts12));
+                break;
+            default: break;
+
+        }
+    }//increase the Nmber of Ships with the length i you can set by 1
+    private void decrease(int i){
+        TextView tex;
+        switch (i){
+            case 5:
+                sts15--;
+                tex=(TextView) findViewById(R.id.textView22);
+                tex.setText(String.valueOf(sts15));
+                break;
+            case 4:
+                sts14--;
+                tex=(TextView) findViewById(R.id.textView23);
+                tex.setText(String.valueOf(sts14));
+                break;
+            case 3:
+                sts13--;
+                tex=(TextView) findViewById(R.id.textView24);
+                tex.setText(String.valueOf(sts13));
+                break;
+            case 2:
+                sts12--;
+                tex=(TextView) findViewById(R.id.textView25);
+                tex.setText(String.valueOf(sts12));
+                break;
+            default: break;
+
+        }
+    }//decrease the Nmber of Ships with the length i you can set by 1
     private void InitializeImages() {
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -146,15 +209,20 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
         img.setScaleType(ImageView.ScaleType.FIT_XY);}
 
     private void setListeners(){
-        ImageView img=(ImageView) findViewById(R.id.imageView);
-        img.setTag("Schlachts");
+        ImageView img= (ImageView) findViewById(R.id.imageView10);
         img.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+                int height = size.y;
                 final int action = event.getAction();
-                if (event.getLocalState() != 5) return false;
                 switch (action) {
                     case DragEvent.ACTION_DRAG_STARTED:
+                        TextView tex;
+                        decrease(((Shipdate) (event.getLocalState())).length);
                         return true;
 
                     case DragEvent.ACTION_DRAG_ENTERED:
@@ -167,9 +235,27 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
                         return true;
 
                     case DragEvent.ACTION_DROP:
+                        //First of all, lets check, if the Ship landed on a valid field.
+                        //the field's size is 18x9, it takes 93%x95% of the total size (see content_singleplayergame.xml
+                        //so we use the coordinates to know on which cell the ship would have landed
+                        float x=event.getX();
+                        float y=event.getY();
+                        System.out.println(y);
+                        System.out.println(x);
+                        int xcord=(int)(x / 0.95 / width * 18);
+                        int ycord=(int)(y / 0.93 / height * 9);
+                        int s=p1.getField()[ycord][xcord];
+                        if (s==2) increase(((Shipdate)(event.getLocalState())).length);
                         return true;
 
                     case DragEvent.ACTION_DRAG_ENDED:
+                        if (!event.getResult()) increase(((Shipdate)(event.getLocalState())).length);
+                        else{//now lets set a new ship on these coordinates. it has several eigenschaftens:
+                            //1)Its long-clickable and then draggable
+                            //2)As long as it collides with a prior set ship, it has a different color (prob. red)
+                            //3) as long as at least one ship collides with another, the continue button is unclickable
+
+                        }
                         return true;
 
                     default:
@@ -180,7 +266,9 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
 
             }
         });
-        img.setOnLongClickListener(new View.OnLongClickListener() {
+        img=(ImageView) findViewById(R.id.imageView);
+        img.setTag("Schlachts");
+                img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (sts15 == 0) return true;
@@ -193,52 +281,17 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
                 ClipData dragdata = new ClipData((String) v.getTag(), new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 ImageView imag = (ImageView) findViewById(R.id.imageView6);
                 MyDragShadowBuilder meinShcatten = new MyDragShadowBuilder(imag, 2, 10);
-                v.startDrag(dragdata, meinShcatten, 5, 0);
+                v.startDrag(dragdata, meinShcatten, new Shipdate(5,'h'), 0);
                 return true;
             }
         });
 
         img=(ImageView) findViewById(R.id.imageView2);
         img.setTag("Kreuzers");
-        img.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                final int action = event.getAction();
-                if (event.getLocalState() != 4) return false;
-                switch (action) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_LOCATION:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        return true;
-
-                    case DragEvent.ACTION_DROP:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        return true;
-
-                    default:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
-
         img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                Button texx = (Button) findViewById(R.id.button3);
-                texx.setText("Klicked 2");
+                if (sts14 == 0) return true;
                 Display display = getWindowManager().getDefaultDisplay();
                 Point size = new Point();
                 display.getSize(size);
@@ -248,7 +301,7 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
                 ClipData dragdata = new ClipData((String) v.getTag(), new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 ImageView imag = (ImageView) findViewById(R.id.imageView7);
                 MyDragShadowBuilder meinShcatten = new MyDragShadowBuilder(imag, 2, 8);
-                v.startDrag(dragdata, meinShcatten, 4, 0);
+                v.startDrag(dragdata, meinShcatten, new Shipdate(4,'h'), 0);
                 return true;
             }
         });
@@ -256,42 +309,11 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
 
         img=(ImageView) findViewById(R.id.imageView3);
         img.setTag("Zerstos");
-        img.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                final int action = event.getAction();
-                if (event.getLocalState() != 3) return false;
-                switch (action) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_LOCATION:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        return true;
-
-                    case DragEvent.ACTION_DROP:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        return true;
-
-                    default:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
 
         img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if (sts13 == 0) return true;
                 Display display = getWindowManager().getDefaultDisplay();
                 Point size = new Point();
                 display.getSize(size);
@@ -301,48 +323,18 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
                 ClipData dragdata = new ClipData((String) v.getTag(), new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 ImageView imag = (ImageView) findViewById(R.id.imageView8);
                 MyDragShadowBuilder meinShcatten = new MyDragShadowBuilder(imag, 2, 6);
-                v.startDrag(dragdata, meinShcatten, 3, 0);
+                v.startDrag(dragdata, meinShcatten, new Shipdate(3,'h'), 0);
                 return true;
             }
         });
 
         img=(ImageView) findViewById(R.id.imageView4);
         img.setTag("Ubots");
-        img.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                final int action = event.getAction();
-                if (event.getLocalState() != 2) return false;
-                switch (action) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        return true;
 
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_LOCATION:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        return true;
-
-                    case DragEvent.ACTION_DROP:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        return true;
-
-                    default:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
         img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if (sts12 == 0) return true;
                 Display display = getWindowManager().getDefaultDisplay();
                 Point size = new Point();
                 display.getSize(size);
@@ -352,7 +344,7 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
                 ClipData dragdata= new ClipData((String)v.getTag(),new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN},item);
                 ImageView imag = (ImageView) findViewById(R.id.imageView9);
                 MyDragShadowBuilder meinShcatten = new MyDragShadowBuilder(imag,2,4);
-                v.startDrag(dragdata, meinShcatten, 2, 0);
+                v.startDrag(dragdata, meinShcatten, new Shipdate(2,'h'), 0);
                 return true;
             }
         });
@@ -365,8 +357,9 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
         //how many ships remained to set
         setContentView(R.layout.activity_singleplayergame);
         Intent intent = getIntent();
-        InitializeSomething(intent);
+
         InitializeImages();
+        InitializeSomething(intent);
         setListeners();
         int[] maxships=new int[4];
         maxships[0]=sts15;
@@ -394,11 +387,6 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
-        System.out.println(height);
-        System.out.println(width);
-        System.out.println(reqWidth);
-        System.out.println(reqHeight);
-
         if (height > reqHeight || width > reqWidth) {
 
             final int halfHeight = height / 2;

@@ -164,6 +164,47 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent">
 
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView"
+                                    android:longClickable="true" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView2"
+                                   />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView3"
+                               />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView4"
+                                    />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView5"
+                                    android:visibility="invisible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
+
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_weight="0.5"
@@ -199,47 +240,6 @@
 
                                     android:layout_weight="0.5" />
 
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent">
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="fill_parent"
-                                    android:id="@+id/imageView"
-                                    android:longClickable="true" />
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="fill_parent"
-                                    android:id="@+id/imageView2"
-                                   />
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="fill_parent"
-                                    android:id="@+id/imageView3"
-                               />
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="fill_parent"
-                                    android:id="@+id/imageView4"
-                                    />
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="fill_parent"
-                                    android:id="@+id/imageView5"
-                                    android:visibility="invisible" />
                             </LinearLayout>
 
                         </RelativeLayout>
@@ -303,7 +303,8 @@
                 <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:background="@drawable/sf"
+                    android:src="@drawable/sf"
+                    android:scaleType="fitXY"
                     android:id="@+id/imageView10" />
             </RelativeLayout>
 
