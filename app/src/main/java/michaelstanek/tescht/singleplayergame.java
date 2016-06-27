@@ -75,10 +75,7 @@ private void InitializeSomething(Intent intent){String st5 = "Schlachtschiffe:\n
     sts14 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE4));
     sts13 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE3));
     sts12 = Integer.valueOf(intent.getStringExtra(startsingleplayer.EXTRA_MESSAGE2));
-    sts25 = sts15;
-    sts24 = sts14;
-    sts23 = sts13;
-    sts22 = sts12;}
+    }
 
     private void InitializeImages() {
 

@@ -1,7 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package michaelstanek.tescht;
 
 /**
- * Created by Michael on 08.04.2016.
+ *
+ * @author Michael
  */
 public class Ship {
     private boolean parthit[]; //ist ein jeweiliges Feld getroffen?
@@ -31,7 +37,7 @@ public class Ship {
                 }
             }
         }
-        else
+        else 
         if (this.row==row) for (i=0;i<=this.length-1;i++){
             if (column==this.column+i) {
                 this.parthit[i]=true;
@@ -44,15 +50,15 @@ public class Ship {
         int i;
         int j;
         for (j=-1;j<=1;j++){
-            if (isVertical) {
-                if (this.column==column+j) for (i=0;i<=this.length-1;i++){
+        if (isVertical) {
+            if (this.column==column+j) for (i=0;i<=this.length-1;i++){
                     return true;
-                }
             }
-            else
-            if (this.row==row+j) for (i=0;i<=this.length-1;i++) {
-                if (column == this.column + i) return true;
-            }
+        }
+        else
+        if (this.row==row+j) for (i=0;i<=this.length-1;i++) {
+            if (column == this.column + i) return true;
+        }
 
 
         }
@@ -64,7 +70,7 @@ public class Ship {
     public void checkSunk(){int i;  //funktion, die aktualisiert, ob das Schiff versunken ist
         this.sunk=true;
         for (i=0;i<=length-1;i++)
-            if (!this.parthit[i]) this.sunk=false;
+    if (!this.parthit[i]) this.sunk=false;
     }
     public boolean isSunk(){ return this.sunk;}  //returned, ob das Schiff versunken ist
 }

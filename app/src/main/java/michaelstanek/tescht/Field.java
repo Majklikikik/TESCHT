@@ -1,18 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package michaelstanek.tescht;
 
 /**
- * Created by Michael on 08.04.2016.
+ *
+ * @author Michael
  */
 public class Field {
     private Ship ships[][];
     private int shipsSet[];//contains the number of ships of a certain size set
-    private int MaxShips[];//Number of ships of a certain size you can set 0=length 5, 3=length 2
-    private byte field[][];//Array, telling whether a cell is occupied by a ship
-    private byte hitfield[][]; //Array, telling wether a cell has been hit and whether there was a ship
-
-    public void setShip(int row, int column, int isVertical) {
-
-    }
+    private int MaxShips[];
+    private byte field[][];
+    private byte hitfield[][];
+    private boolean lastHitSunkShip;
+    private Ship lastSunkShip;
 
     public byte[][] getField() {
         return this.field;
@@ -31,6 +35,7 @@ public class Field {
 
     public Field(int MaxShips[]) {
         this.MaxShips=MaxShips;
+        System.out.println("KOnstruktor mit maxShips");
         ships = new Ship[4][max(MaxShips)];
         //in the field: 0 means empty, 1 means occupied, 2 means not a valid field (=not in the period system)
         byte f[][] = {
@@ -62,13 +67,14 @@ public class Field {
         this.shipsSet[1]=0;
         this.shipsSet[2]=0;
         this.shipsSet[3]=0;
-
+        
     }
     public void setMaxShips(int MaxShips[]){
         this.ships = new Ship[4][max(MaxShips)];
     }
     public Field() {
-
+        System.out.println("Konstruktor");
+        
         //in the field: 0 means empty, 1 means occupied, 2 means not a valid field (=not in the period system)
         byte f[][] = {
                 {0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0},
@@ -95,6 +101,17 @@ public class Field {
         };
         this.hitfield = hf;
     }
+    public boolean lastHitSunkShip(){
+        return this.lastHitSunkShip;
+    }
+    public Ship lasSunkShip(){return this.lastSunkShip;}
+    public int longestShipToSet(){
+        for (int i=3; i>=0;i--){
+        if (this.MaxShips[i]>this.shipsSet[i]) return i+2;
+            }
+        int potato=0;
+        return potato;
+    }
     public boolean checklost(){
         if (!this.checkFilled()) return false;
         for (int i=0;i<=3;i++) for (int j=0; j<=shipsSet[i]-1;j++)
@@ -102,7 +119,7 @@ public class Field {
         return true;
     }
     public boolean setShip(int length, int row, int column, boolean isVertical) {
-        if ((field[row][column] == 2)|| ((isVertical) && (row + length > 9)) || ((!isVertical) && (column + length > 18)) || ((isVertical) && (field[row + length - 1][column] == 2)) || ((!isVertical) && (field[row][column + length - 1] == 2)) )
+        if ((field[row][column] == 2) || ((isVertical) && (row + length > 9)) || ((!isVertical) && (column + length > 18)) || ((isVertical) && (field[row + length - 1][column] == 2)) || ((!isVertical) && (field[row][column + length - 1] == 2)))
             return false;
         int i;
         int j;
@@ -130,23 +147,20 @@ public class Field {
         return true;
     }
     public boolean hit(int row, int column){
-        if (this.field[row][column]!=1) return false;
-        int i,j,k;
-        for (j = 0; j <= 3; j++)
-            for (k = 0; k <= shipsSet[j] - 1; k++) {
-                if (ships[j][k].hitCheck(row, column)) {
-                    // MAYBE SHOW SHIP SUNK ANIMATION HERE
-                    return true;
-                }
-            }
-        return false;
-    }
-    public byte getField(int row, int column){
-        return this.field[row][column];
-    }
-    public int MaxShip()[]{ return this.MaxShips;}
+            if (this.field[row][column]!=1) return false;
+                int i,j,k;
+                    for (j = 0; j <= 3; j++)
+                        for (k = 0; k <= shipsSet[j] - 1; k++) {
+                            if (ships[j][k].hitCheck(row, column)) {
+                                // MAYBE SHOW SHIP SUNK ANIMATION HERE
+                                if (ships[j][k].isSunk()) {this.lastHitSunkShip=true; this.lastSunkShip=ships[j][k];} else this.lastHitSunkShip=false;
+                                return true;
+                            }
+                        }
+            return false;
+        }
     boolean checkFilled() {
-        for (int i = 0; i <= 3; i++) if (shipsSet[i] != MaxShips[i])return false;
+            for (int i = 0; i <= 3; i++) if (shipsSet[i] != MaxShips[i])return false;
         return true;
     }
 }
